@@ -1,1 +1,1 @@
-# app-bouncer
+# manifest-bouncer
