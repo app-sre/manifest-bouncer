@@ -51,7 +51,7 @@ def check(func):
         check_name = "{}:{}".format(self.__class__.__name__, func.__name__)
 
         if len(self.whitelist) > 0:
-            if manifest['kind'] not in self.whitelist_kind:
+            if manifest['kind'] not in self.whitelist:
                 return CheckIgnoreKind(manifest, check_name)
 
         try:
