@@ -64,7 +64,7 @@ def main():
 
     # verify it's a valid k8s manifest
     runner.validate_k8s()
-    report_and_exit_if_errors(runner, verbose=args.verbose)
+    report_and_exit_if_errors(runner)
 
     # run checks
     runner.run()

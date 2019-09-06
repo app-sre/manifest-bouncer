@@ -73,6 +73,7 @@ class CheckIgnoreKind(CheckResult):
 
 
 class CheckBase(object):
+    _autorun = True
     _registered = []
 
     """ only run the check if the manifest 'kind' is in the list """
@@ -81,7 +82,9 @@ class CheckBase(object):
     @classmethod
     def __init_subclass__(cls, *args, **kwargs):
         super().__init_subclass__(**kwargs)
-        cls._registered.append(cls)
+        if cls._autorun:
+            cls._registered.append(cls)
+
         for m in dir(cls):
             if m.startswith('check'):
                 f = getattr(cls, m)
