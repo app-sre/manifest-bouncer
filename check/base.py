@@ -115,7 +115,7 @@ def check(func):
 
         try:
             func(self)
-        except Exception as e:
+        except AssertionError as e:
             return CheckError(self.manifest, check_name, str(e))
 
         return CheckSuccess(self.manifest, check_name)

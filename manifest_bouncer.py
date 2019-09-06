@@ -33,8 +33,9 @@ def read_manifest(manifest_file):
 
 
 def report_and_exit_if_errors(runner, verbose=False):
+    runner.error_report(verbose=verbose)
+
     if runner.has_errors():
-        runner.error_report(verbose=verbose)
         sys.exit(1)
 
 def main():

@@ -5,17 +5,14 @@ class CheckValidK8s(CheckBase):
         m = self.manifest
 
         # it's a dictionary
-        if not isinstance(m, dict):
-            raise Exception('dictionary type like manifest expected.')
+        assert isinstance(m, dict), 'dictionary type like manifest expected.'
 
         # it has 'kind'
-        if 'kind' not in m:
-            raise Exception('"kind" key expected.')
+        assert 'kind' in m, '"kind" key expected.'
 
         # it has 'apiVersion'
-        if 'apiVersion' not in m:
-            raise Exception('"apiVersion" key expected.')
+        assert 'apiVersion' in m, '"apiVersion" key expected.'
 
         # if List: it has 'items'
-        if m['kind'] == 'List' and 'items' not in m:
-            raise Exception('missing "items" key for List objects.')
+        if m['kind'] == 'List':
+            assert 'items' in m, 'missing "items" key for List objects.'
