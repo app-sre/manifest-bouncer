@@ -7,8 +7,6 @@ import anymarkup
 
 from lib import CheckRunner
 
-# TODO REMOVE
-from pprint import pprint
 
 def read_manifest(manifest_file):
     if manifest_file == '-':
@@ -38,6 +36,7 @@ def report_and_exit_if_errors(runner, verbose=False):
     if runner.has_errors():
         sys.exit(1)
 
+
 def main():
     parser = argparse.ArgumentParser(
         description='Run checks on k8s/openshift manifests.')
@@ -53,7 +52,8 @@ def main():
     # manifest path
     parser.add_argument(
         'manifest',
-        help="The manifest to check (YAML or JSON). Use '-' to read from STDIN",
+        help="The manifest to check (YAML or JSON). "
+             "Use '-' to read from STDIN",
         type=read_manifest
     )
 

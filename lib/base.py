@@ -1,5 +1,6 @@
 from .result import CheckError, CheckIgnoreKind, CheckSuccess
 
+
 class CheckBase(object):
     _autorun = True
     _registered = []
@@ -22,6 +23,7 @@ class CheckBase(object):
                 setattr(cls, m, check(f))
 
                 cls._checks.append(m)
+
 
 def check(func):
     """

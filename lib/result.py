@@ -1,6 +1,7 @@
 class CheckResult(object):
     """
-    Abstract class that represent an check result. Tests should not return this class.
+    Abstract class that represent an check result. Tests should not return this
+    class.
     """
 
     repr_label = ""
@@ -65,8 +66,8 @@ class CheckSuccess(CheckResult):
 
 class CheckIgnoreKind(CheckResult):
     """
-    Return this is the Check does not apply to that kind. It will not show up in
-    the default reports.
+    Return this is the Check does not apply to that kind. It will not show up
+    in the default reports.
     """
 
     repr_label = 'IGNORE'

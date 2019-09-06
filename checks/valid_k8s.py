@@ -1,5 +1,6 @@
 from lib.base import CheckBase
 
+
 class CheckValidK8s(CheckBase):
     _autorun = False
 

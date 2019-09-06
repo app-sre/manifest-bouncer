@@ -6,7 +6,8 @@ from .base import CheckBase
 from .result import CheckResult, CheckError
 from checks.valid_k8s import CheckValidK8s
 
-for importer, modname, ispkg in pkgutil.iter_modules(sys.modules['checks'].__path__):
+checks_path = sys.modules['checks'].__path__
+for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
     fqdn_module = "checks.{}".format(modname)
     if fqdn_module not in sys.modules.keys():
         importlib.import_module('.{}'.format(modname), 'checks')
