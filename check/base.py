@@ -97,10 +97,8 @@ class CheckBase(object):
 
 def check(func):
     """
-    The check decorator ensures that the check doesn't run and returns
-    CheckIgnoreKind if the check doesn't apply to the manifest kind.
-
-    It also ensures that CheckSuccess is returned if no errors are raised
+    This decorator is applied in all the check methods in order to ensure that
+    an instance of CheckResult is returned.
     """
 
     def check_wrapped(self, manifest):
