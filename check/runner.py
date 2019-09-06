@@ -17,15 +17,21 @@ class CheckRunner(object):
         self.manifest = manifest
         self._results = []
 
-    def run(self):
-        if self.manifest['kind'] == 'List':
-            for item in self.manifest['items']:
-                self.run_item(item)
-        else:
-            self.run_item(self.manifest)
+    def run(self, classes=None, manifest=None, split_list=True):
+        if not manifest:
+            manifest = self.manifest
 
-    def run_item(self, item):
-        for cls in CheckBase._registered:
+        if split_list and manifest['kind'] == 'List':
+            for item in manifest['items']:
+                self.run_item(item, classes)
+        else:
+            self.run_item(manifest, classes)
+
+    def run_item(self, item, classes=None):
+        if not classes:
+            classes = CheckBase._registered
+
+        for cls in classes:
             instance = cls()
             for m in cls._checks:
                 self.add_result(getattr(instance, m)(item))
@@ -51,11 +57,10 @@ class CheckRunner(object):
                 print(e)
 
     def validate_k8s(self):
-        self.add_result(CheckValidK8s().check(self.manifest))
+        self.run(classes=[CheckValidK8s], split_list=False)
 
         if self.has_errors():
             return
 
         if self.manifest['kind'] == 'List':
-            for item in self.manifest['items']:
-                self.add_result(CheckValidK8s().check(item))
+            self.run(classes=[CheckValidK8s])
