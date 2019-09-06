@@ -1,4 +1,4 @@
-from lib.base import CheckBase, whitelist
+from . import CheckBase, whitelist
 
 
 class CheckValidK8s(CheckBase):

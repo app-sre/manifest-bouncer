@@ -2,10 +2,17 @@
 
 import argparse
 import sys
+import pkgutil
+import importlib
 
 import anymarkup
 
-from lib import CheckRunner
+from lib import CheckRunner, CheckBase
+
+# import all checks
+checks_path = sys.modules['checks'].__path__
+for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
+    m = importlib.import_module('checks.{}'.format(modname))
 
 
 def read_manifest(manifest_file):
@@ -45,9 +52,12 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Print full report')
 
-    # limits
-    parser.add_argument('--limits', action='store_true',
-                        help='Check that limits are defined')
+    # dynamic test loading
+    for cls in CheckBase._subclasses:
+        if cls.enable_parameter:
+            parser.add_argument(
+                '--' + cls.enable_parameter, action='store_true',
+                help=cls.description)
 
     # manifest path
     parser.add_argument(
@@ -60,7 +70,7 @@ def main():
     args = parser.parse_args()
 
     # initialize runner
-    runner = CheckRunner(args.manifest)
+    runner = CheckRunner(args)
 
     # verify it's a valid k8s manifest
     runner.validate_k8s()

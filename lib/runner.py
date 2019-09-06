@@ -6,6 +6,7 @@ from .base import CheckBase
 from .result import CheckResult, CheckError
 from checks.valid_k8s import CheckValidK8s
 
+# import all checks
 checks_path = sys.modules['checks'].__path__
 for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
     fqdn_module = "checks.{}".format(modname)
@@ -14,8 +15,9 @@ for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
 
 
 class CheckRunner(object):
-    def __init__(self, manifest):
-        self.manifest = manifest
+    def __init__(self, args):
+        self.args = args
+        self.manifest = self.args.manifest
         self._results = []
 
     def run(self, classes=None, manifest=None, split_list=True):
@@ -30,7 +32,10 @@ class CheckRunner(object):
 
     def run_item(self, item, classes=None):
         if not classes:
-            classes = CheckBase._registered
+            classes = []
+            for cls in CheckBase._registered:
+                if getattr(self.args, cls.enable_parameter):
+                    classes.append(cls)
 
         for cls in classes:
             instance = cls()

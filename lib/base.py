@@ -6,13 +6,22 @@ from .result import CheckError, CheckIgnoreKind, CheckSuccess, CheckResult
 class CheckBase(object):
     _autoregister = True
     _registered = []
+    _subclasses = []
 
     """ only run the check if the manifest 'kind' is in the list """
     whitelist = []
 
+    """
+    this check will be enabled if the string in `enable_parameter` is passed as
+    an argument
+    """
+    enable_parameter = None
+    description = ""
+
     @classmethod
     def __init_subclass__(cls, *args, **kwargs):
         super().__init_subclass__(**kwargs)
+        cls._subclasses.append(cls)
         if cls._autoregister:
             cls._registered.append(cls)
 

@@ -1,8 +1,11 @@
-from lib.base import CheckBase
+from . import CheckBase
 
 
 class CheckLimits(CheckBase):
     whitelist = ['DeploymentConfig']
+
+    enable_parameter = 'limits'
+    description = 'Check that limits are defined'
 
     def check_limits_cpu(self, m):
         try:
