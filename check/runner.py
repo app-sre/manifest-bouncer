@@ -26,9 +26,9 @@ class CheckRunner(object):
 
     def run_item(self, item):
         for cls in CheckBase._registered:
-            instance = cls(item)
+            instance = cls()
             for m in cls._checks:
-                self.add_result(getattr(instance, m)())
+                self.add_result(getattr(instance, m)(item))
 
     def add_result(self, result):
         if isinstance(result, CheckResult):
@@ -51,11 +51,11 @@ class CheckRunner(object):
                 print(e)
 
     def validate_k8s(self):
-        self.add_result(CheckValidK8s(self.manifest).check())
+        self.add_result(CheckValidK8s().check(self.manifest))
 
         if self.has_errors():
             return
 
         if self.manifest['kind'] == 'List':
             for item in self.manifest['items']:
-                self.add_result(CheckValidK8s(item).check())
+                self.add_result(CheckValidK8s().check(item))

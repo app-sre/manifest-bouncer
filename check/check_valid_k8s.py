@@ -3,9 +3,7 @@ from .base import CheckBase
 class CheckValidK8s(CheckBase):
     _autorun = False
 
-    def check(self):
-        m = self.manifest
-
+    def check(self, m):
         # it's a dictionary
         assert isinstance(m, dict), 'dictionary type like manifest expected.'
 

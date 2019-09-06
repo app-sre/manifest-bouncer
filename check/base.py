@@ -95,12 +95,6 @@ class CheckBase(object):
 
                 cls._checks.append(m)
 
-    def __init__(self, manifest):
-        self.manifest = manifest
-
-    def manifest_kind(self):
-        return self.manifest['kind']
-
 def check(func):
     """
     The check decorator ensures that the check doesn't run and returns
@@ -109,18 +103,18 @@ def check(func):
     It also ensures that CheckSuccess is returned if no errors are raised
     """
 
-    def check_wrapped(self):
+    def check_wrapped(self, manifest):
         check_name = "{}:{}".format(self.__class__.__name__, func.__name__)
 
         if len(self.whitelist_kind) > 0:
-            if self.manifest_kind() not in self.whitelist_kind:
-                return CheckIgnoreKind(self.manifest, check_name)
+            if manifest['kind'] not in self.whitelist_kind:
+                return CheckIgnoreKind(manifest, check_name)
 
         try:
-            func(self)
+            func(self, manifest)
         except AssertionError as e:
-            return CheckError(self.manifest, check_name, str(e))
+            return CheckError(manifest, check_name, str(e))
 
-        return CheckSuccess(self.manifest, check_name)
+        return CheckSuccess(manifest, check_name)
 
     return check_wrapped
