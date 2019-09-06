@@ -2,14 +2,14 @@ import sys
 import pkgutil
 import importlib
 
-from .base import CheckBase, CheckResult, CheckError
-from .check_valid_k8s import CheckValidK8s
+from .base import CheckBase
+from .result import CheckResult, CheckError
+from checks.valid_k8s import CheckValidK8s
 
-for importer, modname, ispkg in pkgutil.iter_modules(sys.modules['check'].__path__):
-    if modname.startswith('check_'):
-        fqdn_module = "check.{}".format(modname)
-        if fqdn_module not in sys.modules.keys():
-            importlib.import_module('.{}'.format(modname), 'check')
+for importer, modname, ispkg in pkgutil.iter_modules(sys.modules['checks'].__path__):
+    fqdn_module = "checks.{}".format(modname)
+    if fqdn_module not in sys.modules.keys():
+        importlib.import_module('.{}'.format(modname), 'checks')
 
 
 class CheckRunner(object):

@@ -1,9 +1,9 @@
-from .base import CheckBase
+from lib.base import CheckBase
 
 class CheckValidK8s(CheckBase):
     _autorun = False
 
-    def check(self, m):
+    def check_test(self, m):
         # it's a dictionary
         assert isinstance(m, dict), 'dictionary type like manifest expected.'
 

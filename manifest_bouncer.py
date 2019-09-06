@@ -5,7 +5,7 @@ import sys
 
 import anymarkup
 
-from check import CheckRunner
+from lib import CheckRunner
 
 # TODO REMOVE
 from pprint import pprint
