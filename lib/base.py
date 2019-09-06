@@ -4,7 +4,7 @@ from .result import CheckError, CheckIgnoreKind, CheckSuccess, CheckResult
 
 
 class CheckBase(object):
-    _autorun = True
+    _autoregister = True
     _registered = []
 
     """ only run the check if the manifest 'kind' is in the list """
@@ -13,7 +13,7 @@ class CheckBase(object):
     @classmethod
     def __init_subclass__(cls, *args, **kwargs):
         super().__init_subclass__(**kwargs)
-        if cls._autorun:
+        if cls._autoregister:
             cls._registered.append(cls)
 
         for m in dir(cls):

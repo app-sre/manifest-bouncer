@@ -2,7 +2,7 @@ from lib.base import CheckBase, whitelist
 
 
 class CheckValidK8s(CheckBase):
-    _autorun = False
+    _autoregister = False
 
     def check_dictionary(self, m):
         # it's a dictionary
