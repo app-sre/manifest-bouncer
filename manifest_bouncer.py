@@ -65,7 +65,8 @@ def main():
         'manifest',
         help="The manifest to check (YAML or JSON). "
              "Use '-' to read from STDIN",
-        type=read_manifest
+        type=read_manifest,
+        metavar='MANIFEST'
     )
 
     # Enable all tests
