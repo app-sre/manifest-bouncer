@@ -58,12 +58,12 @@ def main():
 
     # verbose
     parser.add_argument('-v', '--verbose', action='store_true',
-                        help='Print full report')
+                        help='print full report')
 
     # manifest path
     parser.add_argument(
         'manifest',
-        help="The manifest to check (YAML or JSON). "
+        help="the manifest to check (YAML or JSON). "
              "Use '-' to read from STDIN",
         type=read_manifest,
         metavar='MANIFEST'
@@ -72,7 +72,7 @@ def main():
     # Enable all tests
     parser.add_argument(
         '--enable-all',
-        help=("Run all the checks. To disable a specific check, "
+        help=("run all the checks. To disable a specific check, "
               "use the `--disable-<check>` form."),
         action='store_true'
     )
