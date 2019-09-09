@@ -1,0 +1,10 @@
+FROM python:3.7.4
+
+RUN pip install tox
+
+ADD . /package
+WORKDIR /package
+
+RUN python setup.py install
+
+CMD ["tox"]

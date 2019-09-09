@@ -30,7 +30,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'manifest-bouncer = manifest_bouncer:main',
+            'manifest-bouncer = cli.main:main',
         ],
     },
 )
