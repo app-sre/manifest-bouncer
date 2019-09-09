@@ -33,10 +33,19 @@ class CheckRunner(object):
     def run_item(self, item, classes=None):
         if not classes:
             classes = []
+
             for cls in CheckBase._registered:
-                if cls.enable_parameter and \
-                        getattr(self.args, cls.enable_parameter):
-                    classes.append(cls)
+                if not cls.enable_parameter:
+                    continue
+
+                is_enabled = getattr(self.args, cls.enable_parameter)
+
+                if self.args.enable_all:
+                    if is_enabled is not False:
+                        classes.append(cls)
+                else:
+                    if is_enabled:
+                        classes.append(cls)
 
         for cls in classes:
             instance = cls()

@@ -60,6 +60,22 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true',
                         help='Print full report')
 
+    # manifest path
+    parser.add_argument(
+        'manifest',
+        help="The manifest to check (YAML or JSON). "
+             "Use '-' to read from STDIN",
+        type=read_manifest
+    )
+
+    # Enable all tests
+    parser.add_argument(
+        '--enable-all',
+        help=("Run all the checks. To disable a specific check, "
+              "use the `--disable-<check>` form."),
+        action='store_true'
+    )
+
     # dynamic test loading
     for cls in CheckBase._subclasses:
         if cls.enable_parameter:
@@ -70,14 +86,6 @@ def main():
                 help=cls.description,
                 dest=cls.enable_parameter,
                 nargs=0)
-
-    # manifest path
-    parser.add_argument(
-        'manifest',
-        help="The manifest to check (YAML or JSON). "
-             "Use '-' to read from STDIN",
-        type=read_manifest
-    )
 
     args = parser.parse_args()
 
