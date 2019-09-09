@@ -47,7 +47,10 @@ Checks can be added by simply contributing a new class to the [checks](https://g
 Example:
 
 ```python
-class CheckMyChecj(CheckBase):
+from lib.base import CheckBase
+
+
+class CheckMyCheck(CheckBase):
     whitelist = ["DeploymentConfig", "StatefulSet", "ReplicaSet"]
     enable_parameter = "mycheck"
     help = "check if mycheck passes"
