@@ -41,6 +41,7 @@ Checks can be added by simply contributing a new class to the [checks](https://g
 - If it should be passed only on a specific template `kinds` then it's possible to define a class level attribute `whitelist` that lists all matching kinds.
 - Within the class, each method that begins with `check_` will be run as a check. Checks must raise an `AssertionError` if they don't pass, other exceptions will be treated as runtime errors. These methods must have the following signature: `(self, m)`, where `m` is the manifest.
 - The `check_` methods can be further filtered for specific kinds using the `@whitelist(*kinds)` decorator.
+- Note that you can use the `@whitelist` decorator without the class variable `whitelist` (and viceversa).
 - Every class that implements a check should have an `enable_parameter` class varoabñe that will generate two command line options: `--enable-<checkname>` and `--disable-checkname>`. It also requires a `description` class variable.
 
 Example:
