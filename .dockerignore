@@ -1,0 +1,12 @@
+Makefile
+README.md
+*.pyc
+*.egg-info
+.tox
+.pytest_cache
+.eggs
+venv
+.git
+**/__pycache__
+.vscode
+dockerfiles
