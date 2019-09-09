@@ -14,7 +14,7 @@ test:
 
 .PHONY: build
 build:
-	@docker build -f dockerfiles/Dockerfil -t $(IMAGE_NAME):latest .
+	@docker build -f dockerfiles/Dockerfile -t $(IMAGE_NAME):latest .
 	@docker tag $(IMAGE_NAME):latest $(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: push
