@@ -2,7 +2,7 @@ from lib.base import CheckBase
 
 
 class CheckLimits(CheckBase):
-    whitelist = ['DeploymentConfig']
+    whitelist = CheckBase.base_kinds['PodTemplateSpec']
 
     enable_parameter = 'limits'
     description = 'Check that limits are defined'

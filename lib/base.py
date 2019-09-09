@@ -18,6 +18,15 @@ class CheckBase(object):
     enable_parameter = None
     description = ""
 
+    """
+    base kinds
+    """
+    base_kinds = {
+        'PodTemplateSpec': ['DeploymentConfig', 'DaemonSet', 'Deployment',
+                            'Job', 'ReplicaSet', 'ReplicationController',
+                            'StatefulSet']
+    }
+
     @classmethod
     def __init_subclass__(cls, *args, **kwargs):
         super().__init_subclass__(**kwargs)
