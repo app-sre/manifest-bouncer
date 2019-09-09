@@ -63,7 +63,7 @@ def main():
     # manifest path
     parser.add_argument(
         'manifest',
-        help="the manifest to check (YAML or JSON). "
+        help="manifest to check (YAML or JSON). "
              "Use '-' to read from STDIN",
         type=read_manifest,
         metavar='MANIFEST'

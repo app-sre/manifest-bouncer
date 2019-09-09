@@ -14,18 +14,18 @@ usage: manifest-bouncer [-h] [-v] [--enable-all] [--enable-limits]
 Run checks on k8s/openshift manifests.
 
 positional arguments:
-  MANIFEST              The manifest to check (YAML or JSON). Use '-' to read
-                        from STDIN
+  MANIFEST              manifest to check (YAML or JSON). Use '-' to read from
+                        STDIN
 
 optional arguments:
   -h, --help            show this help message and exit
-  -v, --verbose         Print full report
-  --enable-all          Run all the checks. To disable a specific check, use
+  -v, --verbose         print full report
+  --enable-all          run all the checks. To disable a specific check, use
                         the `--disable-<check>` form.
   --enable-limits, --disable-limits
-                        Check that limits are defined
+                        check that limits are defined
   --enable-requests, --disable-requests
-                        Check that requests are defined
+                        check that requests are defined
 ```
 
 If all the tests are successful it will exit with `0`. Otherwise it will return with `1` if one or more checks fails.
