@@ -9,6 +9,12 @@ import anymarkup
 
 from lib import CheckRunner, CheckBase
 
+
+class EnableDisableAction(argparse.Action):
+    def __call__(self, parser, ns, values, option):
+        setattr(ns, self.dest, option.startswith('--enable-'))
+
+
 # import all checks
 checks_path = sys.modules['checks'].__path__
 for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
@@ -58,8 +64,12 @@ def main():
     for cls in CheckBase._subclasses:
         if cls.enable_parameter:
             parser.add_argument(
-                '--' + cls.enable_parameter, action='store_true',
-                help=cls.description)
+                '--enable-' + cls.enable_parameter,
+                '--disable-' + cls.enable_parameter,
+                action=EnableDisableAction,
+                help=cls.description,
+                dest=cls.enable_parameter,
+                nargs=0)
 
     # manifest path
     parser.add_argument(
