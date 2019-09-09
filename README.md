@@ -34,7 +34,7 @@ If the manifest is of `kind: List`, this tool will perform the checks on the lis
 
 ## Adding checks
 
-Checks can be added by simply contributing a new class to the [checks](https://github.com/app-sre/manifest-bouncer/blob/master/checks) directory. The added class must:
+Checks can be added by simply contributing a new class to the [checks](/checks) directory. The added class must:
 
 - The class name must start with `Check`, typically: `Check<CheckName>`
 - It must inherit from `CheckBase` (exported from `lib.base`): `class CheckMyCheck(CheckBase)`.
@@ -70,7 +70,7 @@ Since the `enable_parameter` is `my-check` it will generate two new options: `--
 Create and enter the [virtualenv](https://virtualenv.pypa.io/en/latest/) environment:
 
 ```sh
-virtualenv venv
+python3 -m venv venv
 source venv/bin/activate
 
 # make sure you are running the latest setuptools
