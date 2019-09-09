@@ -17,6 +17,8 @@ setup(
         "anymarkup>=0.8.0,<0.9.0",
     ],
 
+    python_requires='>=3.7',
+
     test_suite="tests",
 
     classifiers=[
@@ -25,6 +27,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7',
     ],
+
     entry_points={
         'console_scripts': [
             'manifest-bouncer = manifest_bouncer:main',
