@@ -34,8 +34,11 @@ class CheckBase(object):
         if cls._autoregister:
             cls._registered.append(cls)
 
+        initialized_classes = set()
+
         for m in dir(cls):
-            if not hasattr(cls, '_checks'):
+            if cls not in initialized_classes:
+                initialized_classes.add(cls)
                 cls._checks = []
 
             if m.startswith('check_'):

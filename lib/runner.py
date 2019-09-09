@@ -11,7 +11,7 @@ checks_path = sys.modules['checks'].__path__
 for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
     fqdn_module = "checks.{}".format(modname)
     if fqdn_module not in sys.modules.keys():
-        importlib.import_module('.{}'.format(modname), 'checks')
+        importlib.import_module(fqdn_module)
 
 
 class CheckRunner(object):
@@ -34,13 +34,15 @@ class CheckRunner(object):
         if not classes:
             classes = []
             for cls in CheckBase._registered:
-                if getattr(self.args, cls.enable_parameter):
+                if cls.enable_parameter and \
+                        getattr(self.args, cls.enable_parameter):
                     classes.append(cls)
 
         for cls in classes:
             instance = cls()
             for m in cls._checks:
-                self.add_result(getattr(instance, m)(item))
+                m = getattr(instance, m)
+                self.add_result(m(item))
 
     def add_result(self, result):
         if isinstance(result, CheckResult):

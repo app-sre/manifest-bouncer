@@ -12,7 +12,9 @@ from lib import CheckRunner, CheckBase
 # import all checks
 checks_path = sys.modules['checks'].__path__
 for importer, modname, ispkg in pkgutil.iter_modules(checks_path):
-    m = importlib.import_module('checks.{}'.format(modname))
+    fqdn_module = "checks.{}".format(modname)
+    if fqdn_module not in sys.modules.keys():
+        importlib.import_module(fqdn_module)
 
 
 def read_manifest(manifest_file):

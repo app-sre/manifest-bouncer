@@ -1,11 +1,11 @@
 import yaml
 from textwrap import dedent
 
-from checks.limits import CheckLimits
+from checks.resources import CheckLimits
 from lib.result import CheckError, CheckSuccess
 
 
-def test_check_limits_cpu_empty_containers():
+def test_check_limits_empty_containers():
     manifest = yaml.safe_load(dedent("""
     ---
     apiVersion: apps.openshift.io/v1
@@ -17,11 +17,15 @@ def test_check_limits_cpu_empty_containers():
     """))
 
     c = CheckLimits()
+
     result = c.check_limits_cpu(manifest)
     assert isinstance(result, CheckSuccess)
 
+    result = c.check_limits_memory(manifest)
+    assert isinstance(result, CheckSuccess)
 
-def test_check_limits_cpu_no_containers():
+
+def test_check_limits_no_containers():
     manifest = yaml.safe_load(dedent("""
     ---
     apiVersion: apps.openshift.io/v1
@@ -32,7 +36,11 @@ def test_check_limits_cpu_no_containers():
     """))
 
     c = CheckLimits()
+
     result = c.check_limits_cpu(manifest)
+    assert isinstance(result, CheckSuccess)
+
+    result = c.check_limits_memory(manifest)
     assert isinstance(result, CheckSuccess)
 
 
@@ -49,6 +57,7 @@ def test_check_limits_bad_container():
     """))
 
     c = CheckLimits()
+
     result = c.check_limits_cpu(manifest)
     assert isinstance(result, CheckError)
 
@@ -65,11 +74,16 @@ def test_check_limits_null_cpu():
                 - resources:
                     limits:
                         cpu: null
+                        memory: 100
     """))
 
     c = CheckLimits()
+
     result = c.check_limits_cpu(manifest)
     assert isinstance(result, CheckError)
+
+    result = c.check_limits_memory(manifest)
+    assert isinstance(result, CheckSuccess)
 
 
 def test_check_limits_empty_cpu():
@@ -84,14 +98,19 @@ def test_check_limits_empty_cpu():
                 - resources:
                     limits:
                         cpu: ''
+                        memory: 100
     """))
 
     c = CheckLimits()
+
     result = c.check_limits_cpu(manifest)
     assert isinstance(result, CheckError)
 
+    result = c.check_limits_memory(manifest)
+    assert isinstance(result, CheckSuccess)
 
-def test_check_limits_valid_cpu():
+
+def test_check_limits_valid_cpu_no_memory():
     manifest = yaml.safe_load(dedent("""
     ---
     apiVersion: apps.openshift.io/v1
@@ -107,4 +126,30 @@ def test_check_limits_valid_cpu():
 
     c = CheckLimits()
     result = c.check_limits_cpu(manifest)
+    assert isinstance(result, CheckSuccess)
+
+    result = c.check_limits_memory(manifest)
+    assert isinstance(result, CheckError)
+
+
+def test_check_limits_valid_all():
+    manifest = yaml.safe_load(dedent("""
+    ---
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    spec:
+        template:
+            spec:
+                containers:
+                - resources:
+                    limits:
+                        cpu: 100
+                        memory: 100
+    """))
+
+    c = CheckLimits()
+    result = c.check_limits_cpu(manifest)
+    assert isinstance(result, CheckSuccess)
+
+    result = c.check_limits_memory(manifest)
     assert isinstance(result, CheckSuccess)
