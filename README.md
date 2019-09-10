@@ -7,8 +7,8 @@ A tool to performs checks on kubernetes/openshift manifests.
 ## Usage
 
 ```
-usage: manifest-bouncer [-h] [-v] [--enable-all] [--enable-limits]
-                        [--enable-requests]
+usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all]
+                        [--enable-limits] [--enable-requests]
                         MANIFEST
 
 Run checks on k8s/openshift manifests.
@@ -20,6 +20,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -v, --verbose         print full report
+  --warn-only           do not return an error if the checks fail
   --enable-all          run all the checks. To disable a specific check, use
                         the `--disable-<check>` form.
   --enable-limits, --disable-limits

@@ -45,11 +45,11 @@ def read_manifest(manifest_file):
     return manifest
 
 
-def report_and_exit_if_errors(runner, verbose=False):
+def report_and_exit_if_errors(runner, verbose=False, exit_code=1):
     runner.error_report(verbose=verbose)
 
     if runner.has_errors():
-        sys.exit(1)
+        sys.exit(exit_code)
 
 
 def main():
@@ -66,8 +66,11 @@ def main():
         help="manifest to check (YAML or JSON). "
              "Use '-' to read from STDIN",
         type=read_manifest,
-        metavar='MANIFEST'
-    )
+        metavar='MANIFEST')
+
+    # Warn only
+    parser.add_argument('--warn-only', action='store_true',
+                        help="do not return an error if the checks fail")
 
     # Enable all tests
     parser.add_argument(
@@ -90,15 +93,20 @@ def main():
 
     args = parser.parse_args()
 
+    # get the exit code
+    exit_code = 0 if args.warn_only else 1
+
     # initialize runner
     runner = CheckRunner(args)
 
     # verify it's a valid k8s manifest
     runner.validate_k8s()
-    report_and_exit_if_errors(runner)
+    report_and_exit_if_errors(runner, exit_code=exit_code)
 
     # run checks
     runner.run()
 
     # display report if errors and exit
-    report_and_exit_if_errors(runner, verbose=args.verbose)
+    report_and_exit_if_errors(runner,
+                              verbose=args.verbose,
+                              exit_code=exit_code)
