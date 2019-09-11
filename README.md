@@ -93,6 +93,12 @@ python setup.py develop
 
 Please see [setup.py](setup.py).
 
+## Future work
+- Add check for Kubernetes best-practices such as:
+  - Readiness and Liveness Probe
+  - Not using the `latest` tag for container images
+  - Sequencing of objects (A `Role` should be listed before `RoleBinding`)
+
 ## Licence
 
 [Apache License Version 2.0](LICENSE).
