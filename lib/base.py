@@ -17,6 +17,7 @@ class CheckBase(object):
     """
     enable_parameter = None
     description = ""
+    default_enabled = False
 
     """
     base kinds

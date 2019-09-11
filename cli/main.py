@@ -72,7 +72,7 @@ def main():
     parser.add_argument('--warn-only', action='store_true',
                         help="do not return an error if the checks fail")
 
-    # Enable all tests
+    # Enable all checks
     parser.add_argument(
         '--enable-all',
         help=("run all the checks. To disable a specific check, "
@@ -80,14 +80,28 @@ def main():
         action='store_true'
     )
 
+    # Disabled all checks
+    parser.add_argument(
+        '--disable-all',
+        help=("Don't run any checks. To enable a specific check, "
+              "use the `--enable-<check>` form."),
+        action='store_true'
+    )
+
     # dynamic test loading
     for cls in CheckBase._subclasses:
         if cls.enable_parameter:
+
+            if cls.default_enabled:
+                description = "{} (Default: ENABLED)".format(cls.description)
+            else:
+                description = "{} (Default: DISABLED)".format(cls.description)
+
             parser.add_argument(
                 '--enable-' + cls.enable_parameter,
                 '--disable-' + cls.enable_parameter,
                 action=EnableDisableAction,
-                help=cls.description,
+                help=description,
                 dest=cls.enable_parameter,
                 nargs=0)
 

@@ -7,7 +7,7 @@ A tool to performs checks on kubernetes/openshift manifests.
 ## Usage
 
 ```
-usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all]
+usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all] [--disable-all]
                         [--enable-limits] [--enable-requests]
                         MANIFEST
 
@@ -23,10 +23,12 @@ optional arguments:
   --warn-only           do not return an error if the checks fail
   --enable-all          run all the checks. To disable a specific check, use
                         the `--disable-<check>` form.
+  --disable-all         Don't run any checks. To enable a specific check, use
+                        the `--enable-<check>` form.
   --enable-limits, --disable-limits
-                        check that limits are defined
+                        check that limits are defined (Default: ENABLED)
   --enable-requests, --disable-requests
-                        check that requests are defined
+                        check that requests are defined (Default: DISABLED)
 ```
 
 If all the tests are successful it will exit with `0`. Otherwise it will return with `1` if one or more checks fails.

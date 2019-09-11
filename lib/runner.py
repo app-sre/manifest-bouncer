@@ -40,11 +40,14 @@ class CheckRunner(object):
 
                 is_enabled = getattr(self.args, cls.enable_parameter)
 
-                if self.args.enable_all:
+                if self.args.disable_all:
+                    if is_enabled:
+                        classes.append(cls)
+                elif self.args.enable_all:
                     if is_enabled is not False:
                         classes.append(cls)
                 else:
-                    if is_enabled:
+                    if is_enabled or cls.default_enabled:
                         classes.append(cls)
 
         for cls in classes:

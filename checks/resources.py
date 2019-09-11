@@ -26,6 +26,7 @@ class CheckResources(CheckBase):
 class CheckLimits(CheckResources):
     enable_parameter = 'limits'
     description = 'check that limits are defined'
+    default_enabled = True
 
     def check_limits_cpu(self, m):
         containers = self.get_containers(m)
@@ -41,6 +42,7 @@ class CheckLimits(CheckResources):
 class CheckRequests(CheckResources):
     enable_parameter = 'requests'
     description = 'check that requests are defined'
+    default_enabled = False
 
     def check_requests_cpu(self, m):
         containers = self.get_containers(m)
