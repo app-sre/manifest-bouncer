@@ -94,10 +94,12 @@ python setup.py develop
 Please see [setup.py](setup.py).
 
 ## Future work
-- Add check for Kubernetes best-practices such as:
-  - Readiness and Liveness Probe
-  - Not using the `latest` tag for container images
-  - Sequencing of objects (A `Role` should be listed before `RoleBinding`)
+
+- Readiness and Liveness Probe
+- Not using the `latest` tag for container images
+- Sequencing of objects (A `Role` should be listed before `RoleBinding`)
+- All containers should be named
+- All ports should be named
 
 ## Licence
 
