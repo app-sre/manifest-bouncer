@@ -100,6 +100,8 @@ Please see [setup.py](setup.py).
 - Sequencing of objects (A `Role` should be listed before `RoleBinding`)
 - All containers should be named
 - All ports should be named
+- Container name must be reported in the report
+- CheckLimits and CheckRequests should support an extra argument that ensures the values are within those boundaries
 
 ## Licence
 
