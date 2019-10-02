@@ -80,6 +80,9 @@ def check(func):
             result = func(self, manifest)
         except AssertionError as e:
             return CheckError(manifest, check_name, str(e))
+        except Exception as e:
+            e_msg = "Unhandled exception: {}: {}".format(type(e).__name__, e)
+            return CheckError(manifest, check_name, e_msg)
 
         if isinstance(result, CheckResult):
             return result

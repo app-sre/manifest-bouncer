@@ -13,14 +13,16 @@ class CheckResources(CheckBase):
 
     @staticmethod
     def do_check_resource(containers, resource, subresource):
-        msg = "Expecting {}.{}.".format(resource, subresource)
+        msg = "Expecting {}.{}".format(resource, subresource)
         for c in containers:
+            c_name = c.get('name', '<unnamed>')
+
             try:
                 res = c['resources'][resource][subresource]
             except (KeyError, TypeError):
                 res = None
 
-            assert res, msg
+            assert res, msg + " in container '{}'.".format(c_name)
 
 
 class CheckLimits(CheckResources):
