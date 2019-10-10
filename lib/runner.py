@@ -20,15 +20,14 @@ class CheckRunner(object):
         self.manifest = self.args.manifest
         self._results = []
 
-    def run(self, classes=None, manifest=None, split_list=True):
+    def run(self, classes=None, manifest=None):
         if not manifest:
             manifest = self.manifest
 
-        if split_list and manifest['kind'] == 'List':
+        self.run_item(manifest, classes)
+        if manifest['kind'] == 'List':
             for item in manifest['items']:
                 self.run_item(item, classes)
-        else:
-            self.run_item(manifest, classes)
 
     def run_item(self, item, classes=None):
         if not classes:
@@ -77,10 +76,7 @@ class CheckRunner(object):
                 print(e)
 
     def validate_k8s(self):
-        self.run(classes=[CheckValidK8s], split_list=False)
+        self.run(classes=[CheckValidK8s])
 
         if self.has_errors():
             return
-
-        if self.manifest['kind'] == 'List':
-            self.run(classes=[CheckValidK8s])
