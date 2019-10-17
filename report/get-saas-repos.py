@@ -49,8 +49,10 @@ for e in cico:
                     if ':' in saas_git:
                         saas_git = saas_git[:saas_git.index(':')]
 
-                    saas_git = ("https://github.com/openshiftio/{}"
-                                .format(saas_git))
+                    saas_org = job.get('saas_organization', 'openshiftio')
+
+                    saas_git = ("https://github.com/{}/{}"
+                                .format(saas_org, saas_git))
 
                     saas_repos.add(canonical_repo(saas_git))
 
