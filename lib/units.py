@@ -5,7 +5,6 @@ def mem_to_bytes(mem):
     if isinstance(mem, (float, int)):
         return mem
 
-    """ https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#meaning-of-memory """
     m = re.match(r"^((?:0|[1-9]\d*)(?:\.\d+)?)\s*([A-Za-z]+)?$", mem)
 
     if m is None:
