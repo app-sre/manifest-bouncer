@@ -1,4 +1,5 @@
 from lib.base import CheckBase
+from lib.units import mem_to_bytes, cpu_to_millicores
 
 
 class CheckResources(CheckBase):
@@ -81,6 +82,14 @@ class CheckBestEffort(CheckResources):
             assert mem_req, error_msg('Expecting requests/memory')
             assert mem_lim, error_msg('Expecting limits/memory')
 
-            # ensure reqs is smaller than limits
-            assert cpu_req < cpu_lim, error_msg('Expecting cpu_req < cpu_lim')
-            assert mem_req < mem_lim, error_msg('Expecting mem_req < mem_lim')
+            # ensure reqs are smaller than limits
+            cpu_msg = 'Expecting cpu_req ({}) < cpu_lim ({})'.format(
+                cpu_req, cpu_lim)
+
+            assert cpu_to_millicores(cpu_req) < cpu_to_millicores(cpu_lim), \
+                cpu_msg
+
+            mem_msg = 'Expecting mem_req ({}) < mem_lim ({})'.format(
+                mem_req, mem_lim)
+
+            assert mem_to_bytes(mem_req) < mem_to_bytes(mem_lim), mem_msg
