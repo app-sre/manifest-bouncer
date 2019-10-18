@@ -1,6 +1,8 @@
+TS := $(shell date '+%Y%m%d%H%M')
+
 .PHONY: report
 report:
-	@./run-manifest-bouncer-saas.py | tee report.$(sh date '+%Y%m%d%H%M').md
+	@./run-manifest-bouncer-saas.py
 
 .PHONY: clone
 clone:
