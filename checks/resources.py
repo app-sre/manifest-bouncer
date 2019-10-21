@@ -54,12 +54,12 @@ class CheckRequests(CheckResources):
         self.do_check_resource(containers, 'requests', 'memory')
 
 
-class CheckBestEffort(CheckResources):
-    enable_parameter = 'best-effort'
-    description = "ensure containers are best effort (req < limits)"
+class CheckBurstable(CheckResources):
+    enable_parameter = 'burstable'
+    description = "ensure containers are burstable (req < limits)"
     default_enabled = True
 
-    def check_best_effort(self, m):
+    def check_burstable(self, m):
         for container in self.get_containers(m):
             name = container['name']
 
