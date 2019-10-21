@@ -12,7 +12,6 @@ WORK_DIR = 'saas-repos'
 errors = {}
 
 for saas_repo in os.listdir(WORK_DIR):
-
     saas_repo_path = os.path.join(WORK_DIR, saas_repo)
     config = yaml.safe_load(open(os.path.join(saas_repo_path, 'config.yaml')))
 
@@ -39,7 +38,7 @@ for saas_repo in os.listdir(WORK_DIR):
 date = datetime.datetime.now().strftime("%Y%m%d%H%M")
 
 for (saas_repo_name, url), saas_repo in errors.items():
-    log_dir = "saas-repo-logs-{}".format(date)
+    log_dir = "saas-repos-logs-{}".format(date)
 
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
