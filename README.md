@@ -8,7 +8,8 @@ A tool to performs checks on kubernetes/openshift manifests.
 
 ```
 usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all] [--disable-all]
-                        [--enable-rbac] [--enable-limits] [--enable-requests]
+                        [--enable-rbac] [--enable-registry-quay]
+                        [--enable-limits] [--enable-requests]
                         [--enable-burstable]
                         MANIFEST
 
@@ -28,6 +29,9 @@ optional arguments:
                         the `--enable-<check>` form.
   --enable-rbac, --disable-rbac
                         check that Roles are listed before RoleBindings
+                        (Default: ENABLED)
+  --enable-registry-quay, --disable-registry-quay
+                        check that all the images are hosted in quay.io
                         (Default: ENABLED)
   --enable-limits, --disable-limits
                         check that limits are defined (Default: DISABLED)
