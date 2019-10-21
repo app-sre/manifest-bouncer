@@ -1,11 +1,11 @@
 import yaml
 from textwrap import dedent
 
-from checks.resources import CheckBestEffort
+from checks.resources import CheckBurstable
 from lib.result import CheckError, CheckSuccess
 
 
-def test_check_best_efffort_empty_containers():
+def test_check_burstable_empty_containers():
     manifest = yaml.safe_load(dedent("""
     ---
     apiVersion: apps.openshift.io/v1
@@ -16,9 +16,9 @@ def test_check_best_efffort_empty_containers():
                 containers: []
     """))
 
-    c = CheckBestEffort()
+    c = CheckBurstable()
 
-    result = c.check_best_effort(manifest)
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckSuccess)
 
 
@@ -32,9 +32,9 @@ def test_check_requests_no_containers():
             spec:
     """))
 
-    c = CheckBestEffort()
+    c = CheckBurstable()
 
-    result = c.check_best_effort(manifest)
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckSuccess)
 
 
@@ -50,9 +50,9 @@ def test_check_requests_bad_container():
                 - bla
     """))
 
-    c = CheckBestEffort()
+    c = CheckBurstable()
 
-    result = c.check_best_effort(manifest)
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckError)
 
 
@@ -72,9 +72,9 @@ def test_check_requests_null_cpu():
                         memory: 100
     """))
 
-    c = CheckBestEffort()
+    c = CheckBurstable()
 
-    result = c.check_best_effort(manifest)
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckError)
 
 
@@ -94,9 +94,9 @@ def test_check_requests_empty_cpu():
                         memory: 100
     """))
 
-    c = CheckBestEffort()
+    c = CheckBurstable()
 
-    result = c.check_best_effort(manifest)
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckError)
 
 
@@ -116,8 +116,8 @@ def test_check_requests_no_limits():
                         memory: 100
     """))
 
-    c = CheckBestEffort()
-    result = c.check_best_effort(manifest)
+    c = CheckBurstable()
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckError)
 
 
@@ -148,8 +148,8 @@ def test_check_requests_same_limits():
                         memory: 100
     """))
 
-    c = CheckBestEffort()
-    result = c.check_best_effort(manifest)
+    c = CheckBurstable()
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckError)
 
 
@@ -172,6 +172,6 @@ def test_check_requests_valid():
                         memory: 200
     """))
 
-    c = CheckBestEffort()
-    result = c.check_best_effort(manifest)
+    c = CheckBurstable()
+    result = c.check_burstable(manifest)
     assert isinstance(result, CheckSuccess)

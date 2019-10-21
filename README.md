@@ -9,7 +9,7 @@ A tool to performs checks on kubernetes/openshift manifests.
 ```
 usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all] [--disable-all]
                         [--enable-rbac] [--enable-limits] [--enable-requests]
-                        [--enable-best-effort]
+                        [--enable-burstable]
                         MANIFEST
 
 Run checks on k8s/openshift manifests.
@@ -33,8 +33,8 @@ optional arguments:
                         check that limits are defined (Default: DISABLED)
   --enable-requests, --disable-requests
                         check that requests are defined (Default: DISABLED)
-  --enable-best-effort, --disable-best-effort
-                        ensure containers are best effort (req < limits)
+  --enable-burstable, --disable-burstable
+                        ensure containers are burstable (req < limits)
                         (Default: ENABLED)
 ```
 
