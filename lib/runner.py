@@ -39,6 +39,9 @@ class CheckRunner(object):
 
                 is_enabled = getattr(self.args, cls.enable_parameter)
 
+                if is_enabled is None:
+                    is_enabled = cls.default_enabled
+
                 if self.args.disable_all:
                     if is_enabled:
                         classes.append(cls)
@@ -46,7 +49,7 @@ class CheckRunner(object):
                     if is_enabled is not False:
                         classes.append(cls)
                 else:
-                    if is_enabled or cls.default_enabled:
+                    if is_enabled:
                         classes.append(cls)
 
         for cls in classes:
