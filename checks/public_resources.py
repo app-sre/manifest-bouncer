@@ -10,10 +10,7 @@ class CheckPublicResources(CheckBase):
     default_enabled = False
 
     def do_check(self, m, name):
-        forbidden_patterns = [
-            "https://",
-            ".svc.cluster.local"
-        ]
+        forbidden_patterns = ["https://"]
         e_msg = f"Resource data should only be public: '{name}'"
 
         if isinstance(m, str):
