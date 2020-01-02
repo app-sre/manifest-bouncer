@@ -27,3 +27,21 @@ class CheckPrometheusRuleSeverity(CheckBase):
                                  severity,
                                  allowed_severities)
                 assert severity in allowed_severities, msg
+
+
+class CheckPrometheusRuleLabels(CheckBase):
+    whitelist = ['PrometheusRule']
+
+    enable_parameter = 'prometheus-rule-labels'
+    description = 'check that required PrometheusRule labels are set'
+    default_enabled = True
+
+    def check_labels(self, m):
+        required_labels = {'prometheus': 'app-sre', 'role': 'alert-rules'}
+        fmt = "[{}] labels should contain: {}"
+
+        resource_name = m['metadata']['name']
+        labels = m['metadata'].get('labels', {})
+
+        msg = fmt.format(resource_name, required_labels)
+        assert required_labels.items() <= labels.items(), msg

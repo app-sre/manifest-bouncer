@@ -9,6 +9,7 @@ A tool to perform checks on kubernetes/openshift manifests.
 ```
 usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all] [--disable-all]
                         [--enable-prometheus-rule-severity]
+                        [--enable-prometheus-rule-labels]
                         [--enable-public-resources] [--enable-rbac]
                         [--enable-registry-quay] [--enable-limits]
                         [--enable-requests] [--enable-burstable]
@@ -31,6 +32,9 @@ optional arguments:
   --enable-prometheus-rule-severity, --disable-prometheus-rule-severity
                         check that PrometheusRule severity is in allowed
                         values (Default: ENABLED)
+  --enable-prometheus-rule-labels, --disable-prometheus-rule-labels
+                        check that required PrometheusRule labels are set
+                        (Default: ENABLED)
   --enable-public-resources, --disable-public-resources
                         check that all data in a resource is public (Default:
                         DISABLED)
