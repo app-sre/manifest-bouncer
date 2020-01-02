@@ -8,9 +8,10 @@ A tool to perform checks on kubernetes/openshift manifests.
 
 ```
 usage: manifest-bouncer [-h] [-v] [--warn-only] [--enable-all] [--disable-all]
-                        [--enable-rbac] [--enable-registry-quay]
-                        [--enable-limits] [--enable-requests]
-                        [--enable-burstable]
+                        [--enable-prometheus-rule-severity]
+                        [--enable-public-resources] [--enable-rbac]
+                        [--enable-registry-quay] [--enable-limits]
+                        [--enable-requests] [--enable-burstable]
                         MANIFEST
 
 Run checks on k8s/openshift manifests.
@@ -27,9 +28,15 @@ optional arguments:
                         the `--disable-<check>` form.
   --disable-all         Don't run any checks. To enable a specific check, use
                         the `--enable-<check>` form.
+  --enable-prometheus-rule-severity, --disable-prometheus-rule-severity
+                        check that PrometheusRule severity is in allowed
+                        values (Default: ENABLED)
+  --enable-public-resources, --disable-public-resources
+                        check that all data in a resource is public (Default:
+                        DISABLED)
   --enable-rbac, --disable-rbac
                         check that Roles are listed before RoleBindings
-                        (Default: ENABLED)
+                        (Default: DISABLED)
   --enable-registry-quay, --disable-registry-quay
                         check that all the images are hosted in quay.io
                         (Default: ENABLED)
@@ -88,16 +95,16 @@ python3 -m venv venv
 source venv/bin/activate
 
 # make sure you are running the latest setuptools
-pip install --upgrade pip setuptools
+python3 -m pip install --upgrade pip setuptools
 ```
 
 Install the package:
 
 ```sh
-python setup.py install
+python3 setup.py install
 
 # or alternatively use this for a devel environment
-python setup.py develop
+python3 setup.py develop
 ```
 
 ### Requirements
