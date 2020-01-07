@@ -25,7 +25,7 @@ class CheckBase(object):
     base_kinds = {
         'PodTemplateSpec': ['DeploymentConfig', 'DaemonSet', 'Deployment',
                             'Job', 'ReplicaSet', 'ReplicationController',
-                            'StatefulSet']
+                            'StatefulSet', 'CronJob']
     }
 
     @classmethod

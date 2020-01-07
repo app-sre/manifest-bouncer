@@ -113,3 +113,42 @@ def test_check_registry_quay_good():
 
     result = c.check_registry_quay(manifest)
     assert isinstance(result, CheckSuccess)
+
+
+def test_check_registry_quay_init_container():
+    manifest = yaml.safe_load(dedent("""
+    ---
+    apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    spec:
+        template:
+            spec:
+                initContainers:
+                - name: i1
+                  image: quay.io/a/b
+    """))
+
+    c = CheckRegistryQuay()
+
+    result = c.check_registry_quay(manifest)
+    assert isinstance(result, CheckSuccess)
+
+def test_check_registry_quay_cron_job():
+    manifest = yaml.safe_load(dedent("""
+    ---
+    apiVersion: apps.openshift.io/v1
+    kind: CronJob
+    spec:
+        jobTemplate:
+            spec:
+                template:
+                    spec:
+                        containers:
+                        - name: i1
+                          image: quay.io/a/b
+    """))
+
+    c = CheckRegistryQuay()
+
+    result = c.check_registry_quay(manifest)
+    assert isinstance(result, CheckSuccess)
