@@ -1,16 +1,10 @@
 from lib.base import CheckBase
 from lib.units import mem_to_bytes, cpu_to_millicores
+from lib.utils import get_containers
 
 
 class CheckResources(CheckBase):
     whitelist = CheckBase.base_kinds['PodTemplateSpec']
-
-    @staticmethod
-    def get_containers(m):
-        try:
-            return m['spec']['template']['spec']['containers']
-        except (KeyError, TypeError):
-            return []
 
     @staticmethod
     def do_check_resource(containers, resource, subresource):
@@ -32,11 +26,11 @@ class CheckLimits(CheckResources):
     default_enabled = False
 
     def check_limits_cpu(self, m):
-        containers = self.get_containers(m)
+        containers = get_containers(m, include_init_containers=False)
         self.do_check_resource(containers, 'limits', 'cpu')
 
     def check_limits_memory(self, m):
-        containers = self.get_containers(m)
+        containers = get_containers(m, include_init_containers=False)
         self.do_check_resource(containers, 'limits', 'memory')
 
 
@@ -46,11 +40,11 @@ class CheckRequests(CheckResources):
     default_enabled = False
 
     def check_requests_cpu(self, m):
-        containers = self.get_containers(m)
+        containers = get_containers(m, include_init_containers=False)
         self.do_check_resource(containers, 'requests', 'cpu')
 
     def check_requests_memory(self, m):
-        containers = self.get_containers(m)
+        containers = get_containers(m, include_init_containers=False)
         self.do_check_resource(containers, 'requests', 'memory')
 
 
@@ -60,7 +54,7 @@ class CheckBurstable(CheckResources):
     default_enabled = True
 
     def check_burstable(self, m):
-        for container in self.get_containers(m):
+        for container in get_containers(m, include_init_containers=False):
             name = container['name']
 
             resources = container.get('resources', {})
