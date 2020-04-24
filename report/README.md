@@ -11,5 +11,7 @@ Usage:
 ```bash
 # define APP_INTERFACE_USER and APP_INTERFACE_PASSWORD
 ./get-saas-repos.py | ./clone-saas-repos.sh
-./run-manifest-bouncer-saas.sh | tee manifest-bouncer.log
+./run-manifest-bouncer-saas.py
 ```
+
+The results will be placed in a directory named `saas-repo-logs-<date>`.
