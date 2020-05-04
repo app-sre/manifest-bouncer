@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ -n "$INSECURE_PULL" ]]; then
+    INSECURE="--insecure"
+else
+    INSECURE=""
+fi
+
 WORKDIR="$PWD/saas-repos"
 
 rm -rf "$WORKDIR"; mkdir -p "$WORKDIR"
@@ -24,7 +30,7 @@ for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
             [ "$hash_len" -eq "41" ] && saasherder --context $context --environment production update hash $service master
         done
 
-        saasherder --context $context --environment production pull $TOKEN
+        saasherder --context $context --environment production pull $TOKEN $INSECURE
         saasherder --context $context --environment production template --local tag
     done
 done
