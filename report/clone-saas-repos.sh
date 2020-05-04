@@ -6,15 +6,13 @@ rm -rf "$WORKDIR"; mkdir -p "$WORKDIR"
 
 cd "$WORKDIR"
 
-REPOS=`cat -`
-echo "$REPOS" | xargs -P1 -n1 git clone -q
+cat - | xargs -P1 -n1 git clone -q
 
 for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
     cd "$saasrepo"
 
-    project=`basename $saasrepo`
-    repo=`echo "$REPOS" | grep "$project"`
-    if grep -q "https://gitlab" <<< "$repo" && [[ ${#GITLAB_TOKEN} -gt 0 ]]; then
+    repo=$(git remote get-url origin)
+    if [[ $repo = "https://gitlab"* && -n "$GITLAB_TOKEN" ]]; then
         TOKEN="--token $GITLAB_TOKEN"
     else
         TOKEN=""
