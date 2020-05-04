@@ -11,7 +11,7 @@ cat - | xargs -P1 -n1 git clone -q
 for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
     cd "$saasrepo"
 
-    repo=$(git remote get-url origin)
+    repo=$(git config --get remote.origin.url)
     if [[ $repo = "https://gitlab"* && -n "$GITLAB_TOKEN" ]]; then
         TOKEN="--token $GITLAB_TOKEN"
     else
