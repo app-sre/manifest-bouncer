@@ -33,6 +33,7 @@ for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
                 if [ $? -ne 0 ]; then
                     rc=1
                 fi
+            fi
         done
 
         saasherder --context $context --environment production pull $TOKEN $INSECURE
