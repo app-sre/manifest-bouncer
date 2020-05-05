@@ -14,6 +14,7 @@ cd "$WORKDIR"
 
 cat - | xargs -P1 -n1 git clone -q
 
+rc=0
 for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
     cd "$saasrepo"
 
@@ -27,11 +28,23 @@ for saasrepo in `find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d`; do
     for context in $(saasherder config get-contexts); do
         for service in $(saasherder --environment production get-services --context $context); do
             hash_len=$(saasherder --context $context --environment production get hash $service | wc -c)
-            [ "$hash_len" -eq "41" ] && saasherder --context $context --environment production update $INSECURE hash $service master
+            if [ "$hash_len" -eq "41" ]; then
+                saasherder --context $context --environment production update $INSECURE hash $service master
+                if [ $? -ne 0 ]; then
+                    rc=1
+                fi
         done
 
         saasherder --context $context --environment production pull $TOKEN $INSECURE
+        if [ $? -ne 0 ]; then
+            rc=1
+        fi
+
         saasherder --context $context --environment production template --local tag
+        if [ $? -ne 0 ]; then
+            rc=1
+        fi
     done
 done
 
+exit $rc

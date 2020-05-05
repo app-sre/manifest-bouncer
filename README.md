@@ -99,7 +99,7 @@ python3 -m venv venv
 source venv/bin/activate
 
 # make sure you are running the latest setuptools
-python3 -m pip install --upgrade pip setuptools
+python3 -m pip install --upgrade pip setuptools sh
 ```
 
 Install the package:
