@@ -2,7 +2,7 @@ from lib.base import CheckBase
 
 
 class CheckPublicResources(CheckBase):
-    whitelist = CheckBase.base_kinds['PodTemplateSpec']
+    whitelist = list(CheckBase.base_kinds['PodTemplateSpec'])
     whitelist.append('ConfigMap')
 
     enable_parameter = 'public-resources'
