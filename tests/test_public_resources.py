@@ -65,6 +65,7 @@ def test_check_public_deployment_valid():
     result = c.check_public_resource(manifest)
     assert isinstance(result, CheckSuccess)
 
+
 def test_check_public_deployment_invalid():
     manifest = yaml.safe_load(dedent("""
     ---

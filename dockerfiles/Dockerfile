@@ -1,7 +1,6 @@
-FROM python:3.7.4
+FROM registry.access.redhat.com/ubi8/python-38
 
-ADD . /package
-WORKDIR /package
+ADD . .
 
 RUN python setup.py install
 

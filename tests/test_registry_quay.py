@@ -133,6 +133,7 @@ def test_check_registry_quay_init_container():
     result = c.check_registry_quay(manifest)
     assert isinstance(result, CheckSuccess)
 
+
 def test_check_registry_quay_cron_job():
     manifest = yaml.safe_load(dedent("""
     ---
